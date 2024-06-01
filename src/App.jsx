@@ -1,3 +1,5 @@
+import { CORE_CONCEPTS } from "./data.js";
+
 import reactImg from "./assets/react-core-concepts.png"; // dynamic value of img
 // imgs can be lost during deployment, thus better to import from path
 
@@ -21,6 +23,16 @@ function Header() {
   );
 }
 
+function CoreConcept(props) {
+  return (
+    <li>
+      <img src={props.image} alt={props.title} />
+      <h3> {props.title} </h3>
+      <p> {props.description} </p>
+    </li>
+  );
+}
+
 // <Header /> is a way to call the function in regular jsx component
 // or <Header> </Header>
 function App() {
@@ -28,7 +40,16 @@ function App() {
     <div>
       <Header />
       <main>
-        <h2>Time to get started!</h2>
+        <section id="core-concepts">
+          <h2>Core Concepts</h2>
+          <ul>
+            <CoreConcept {...CORE_CONCEPTS[0]} />
+            <CoreConcept {...CORE_CONCEPTS[1]} />
+            <CoreConcept {...CORE_CONCEPTS[2]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} />
+          </ul>
+        </section>
+        {/* <h2>Time to get started!</h2> */}
       </main>
     </div>
   );

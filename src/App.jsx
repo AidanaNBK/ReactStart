@@ -1,41 +1,23 @@
+import { useState } from "react";
+
+import Header from "./components/Header.jsx";
+import CoreConcept from "./components/CoreConcept.jsx";
+import TabButton from "./components/TabButton.jsx";
+
 import { CORE_CONCEPTS } from "./data.js";
-
-import reactImg from "./assets/react-core-concepts.png"; // dynamic value of img
-// imgs can be lost during deployment, thus better to import from path
-
-const reactDescr = ["Fundamentals", "Crucial", "Core"];
-
-function genRandomInt(val) {
-  return Math.floor(Math.random() * (val + 1));
-}
-
-function Header() {
-  const descriptor = reactDescr[genRandomInt(2)];
-  return (
-    <header>
-      <img src={reactImg} alt="Stylized atom" />
-      <h1>React Essentials</h1>
-      <p>
-        {descriptor} React concepts you will need for almost any app you are
-        going to build!
-      </p>
-    </header>
-  );
-}
-
-function CoreConcept(props) {
-  return (
-    <li>
-      <img src={props.image} alt={props.title} />
-      <h3> {props.title} </h3>
-      <p> {props.description} </p>
-    </li>
-  );
-}
-
 // <Header /> is a way to call the function in regular jsx component
 // or <Header> </Header>
 function App() {
+  let [selectedTopic, setSelectedTopic] = useState("Please click a button");
+
+  // let tabContent = "Please click a button";
+
+  function handleClick(selectedButton) {
+    // selectedButton => 'components', 'jsx', 'props', 'state'
+    setSelectedTopic(selectedButton);
+    console.log(selectedButton);
+  }
+
   return (
     <div>
       <Header />
@@ -51,6 +33,18 @@ function App() {
         </section>
         {/* <h2>Time to get started!</h2> */}
       </main>
+      <section id="examples">
+        <h2>Examples</h2>
+        <menu>
+          <TabButton onSelect={() => handleClick("components")}>
+            Components
+          </TabButton>
+          <TabButton onSelect={() => handleClick("jsx")}>JSX</TabButton>
+          <TabButton onSelect={() => handleClick("props")}>Props</TabButton>
+          <TabButton onSelect={() => handleClick("state")}>State</TabButton>
+        </menu>
+        {selectedTopic}
+      </section>
     </div>
   );
 }

@@ -11,8 +11,8 @@ import "./index.css";
 // <Header /> is a way to call the function in regular jsx component
 // or <Header> </Header>
 function App() {
-  let [selectedTopic, setSelectedTopic] = useState("components");
-
+  let [selectedTopic, setSelectedTopic] = useState("");
+  let expampleElements = ["components", "jsx", "props", "state"];
   // let tabContent = "Please click a button";
 
   function handleClick(selectedButton) {
@@ -28,10 +28,10 @@ function App() {
         <section id="core-concepts">
           <h2>Core Concepts</h2>
           <ul>
-            <CoreConcept {...CORE_CONCEPTS[0]} />
-            <CoreConcept {...CORE_CONCEPTS[1]} />
-            <CoreConcept {...CORE_CONCEPTS[2]} />
-            <CoreConcept {...CORE_CONCEPTS[3]} />
+            {CORE_CONCEPTS.map((conceptItem) => (
+              <CoreConcept key={conceptItem.title} {...conceptItem} />
+            ))}
+            {/* <CoreConcept {...CORE_CONCEPTS[0]} /> */}
           </ul>
         </section>
         {/* <h2>Time to get started!</h2> */}
@@ -39,21 +39,36 @@ function App() {
       <section id="example">
         <h2>Examples</h2>
         <menu>
-          <TabButton onSelect={() => handleClick("components")}>
+          {expampleElements.map((elem) => (
+            <TabButton
+              key={elem}
+              isSelected={selectedTopic === elem}
+              onSelect={() => handleClick(elem)}
+            >
+              {elem.toUpperCase()}
+            </TabButton>
+          ))}
+          {/* 
+          <TabButton
+            isSelected={selectedTopic === "components"}
+            onSelect={() => handleClick("components")}
+          >
             Components
-          </TabButton>
-          <TabButton onSelect={() => handleClick("jsx")}>JSX</TabButton>
-          <TabButton onSelect={() => handleClick("props")}>Props</TabButton>
-          <TabButton onSelect={() => handleClick("state")}>State</TabButton>
+          </TabButton> 
+          */}
         </menu>
 
-        <div id="tab-content">
-          <h3>{EXAMPLES[selectedTopic].title}</h3>
-          <p>{EXAMPLES[selectedTopic].description}</p>
-          <pre>
-            <code>{EXAMPLES[selectedTopic].code}</code>
-          </pre>
-        </div>
+        {!selectedTopic && <p>Please Select a topic</p>}
+        {selectedTopic && (
+          <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+              <code>{EXAMPLES[selectedTopic].code}</code>
+            </pre>
+          </div>
+        )}
+        {/* or simply can use a ternary operator */}
       </section>
     </div>
   );

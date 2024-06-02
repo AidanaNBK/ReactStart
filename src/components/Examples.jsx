@@ -1,4 +1,6 @@
 import TabButton from "./TabButton.jsx";
+import Section from "./Section.jsx";
+import Tab from "./Tab.jsx";
 import { EXAMPLES } from "../data.js";
 import { useState } from "react";
 
@@ -11,11 +13,23 @@ export default function Examples() {
     console.log(selectedButton);
   }
 
+  let tabComponent = !selectedTopic ? (
+    <p>Please Select a topic</p>
+  ) : (
+    <div id="tab-content">
+      <h3>{EXAMPLES[selectedTopic].title}</h3>
+      <p>{EXAMPLES[selectedTopic].description}</p>
+      <pre>
+        <code>{EXAMPLES[selectedTopic].code}</code>
+      </pre>
+    </div>
+  );
+
   return (
-    <section id="example">
-      <h2>Examples</h2>
-      <menu>
-        {expampleElements.map((elem) => (
+    <Section id="example" title="Examples">
+      <Tab
+        containerType="menu"
+        innerButtons={expampleElements.map((elem) => (
           <TabButton
             key={elem}
             isSelected={selectedTopic === elem}
@@ -24,24 +38,9 @@ export default function Examples() {
             {elem.toUpperCase()}
           </TabButton>
         ))}
-        {/* 
-          <TabButton
-            isSelected={selectedTopic === "components"}
-            onSelect={() => handleClick("components")}
-          > Components </TabButton> 
-          */}
-      </menu>
-
-      {!selectedTopic && <p>Please Select a topic</p>}
-      {selectedTopic && (
-        <div id="tab-content">
-          <h3>{EXAMPLES[selectedTopic].title}</h3>
-          <p>{EXAMPLES[selectedTopic].description}</p>
-          <pre>
-            <code>{EXAMPLES[selectedTopic].code}</code>
-          </pre>
-        </div>
-      )}
-    </section>
+      >
+        {tabComponent}
+      </Tab>
+    </Section>
   );
 }

@@ -1,4 +1,8 @@
-export default function Tab({ children, innerButtons, containerType }) {
+export default function Tab({
+  children,
+  innerButtons,
+  containerType = "menu",
+}) {
   const ContainerType = containerType;
   return (
     <>
